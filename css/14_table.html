@@ -70,9 +70,124 @@
       </tr>
     </tfoot>
   </table>
+  <hr>
 
+  <style>
+    .table2 {
+      border: 1px solid gray;
+      border-collapse: collapse;
+      text-align: center;
+      margin: 10px auto;
+    }
+    .table2 > thead th {
+    border: 1px solid gray;
+    }
+    .table2 > thead th:nth-of-type(n) { 
+      width: 100px;
+      height: 30px;
+    }
+    .table2 > tbody td {
+      border: 1px solid gray;
+      height: 100px;
+      text-align: left;       /* 가로 방향 정렬 */
+      vertical-align: top;   /* 세로 방향 정렬 */
+    }
+    .table2 > tbody td:hover {
+      background-color: aliceblue;
+      cursor: pointer;
+    }
+    .table2 > tbody td:active {
+      background-color:aqua;
+    }
+    .gray {
+      color: gray;
+    }
+    .red {
+      color: red;
+    }
+    .blue {
+      color: blue;
+    }
+    div {
+      font-weight: 700;
+      text-align: center;
+    }
+    #ten {
+      font-size: 50px;
+      color: blue;
+    }
+    table {
+      content: none;
+    }
+  </style>
+  <div>
+    <span>2024</span>
+    <span id="ten">10</span>
+    <span>february</span>
+  </div>
+  <div>
+    <table class="table2">
+      <thead>
+        <tr>
+          <th class="red">sun</th>
+          <th>mon</th>
+          <th>tue</th>
+          <th>wed</th>
+          <th>thu</th>
+          <th>fri</th>
+          <th class="blue">sat</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="gray">29</td>
+          <td class="gray">30</td>
+          <td class="red">1</td>
+          <td>2</td>
+          <td class="red">3</td>
+          <td>4</td>
+          <td class="blue">5</td>
+        </tr>
+        <tr>
+          <td class="red">6</td>
+          <td>7</td>
+          <td>8</td>
+          <td class="red">9</td>
+          <td>10</td>
+          <td class="red">11</td>          
+          <td class="red">12</td>
+        </tr>
+        <tr>
+          <td class="red">13</td>
+          <td>14</td>
+          <td>15</td>
+          <td>16</td>
+          <td>17</td>
+          <td>18</td>
+          <td class="blue">19</td>
+        </tr>
+        <tr>
+          <td class="red">20</td>
+          <td>21</td>
+          <td>22</td>
+          <td>23</td>
+          <td>24</td>
+          <td>25</td>
+          <td class="blue">26</td>
+        </tr>
+        <tr>
+          <td class="red">27</td>
+          <td>28</td>
+          <td>29</td>
+          <td>30</td>
+          <td>31</td>
+          <td class="gray">1</td>
+          <td class="gray">2</td>
+        </tr>
 
-
+      </tbody>
+    </table>
+  </div>
 
 
 
