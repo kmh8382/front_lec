@@ -14,7 +14,7 @@
       2) transition-dulation : 디폴트 0s, 이행 시간(초)
       3) transition-property : 디폴트 all, 이행할 css 속성
       4) transition-time-function : 디폴트 ease, 이행 속도 조정
-      5) transition : 1) 2) 3) 4) 순으로 한번에 작성하는 단축 속성
+      5) transition : 3) 2) 4) 1) 순으로 한번에 작성하는 단축 속성
   -->
 
   <style>
@@ -78,6 +78,9 @@
       position: absolute;
       top: 0px;
       transition: opacity 1s;   /* property duration timing-function delay 순 */
+      transition-property: opacity, transform;
+      transition-duration: 1s;      
+
     }
     .screen:hover {
       height: 0px;
