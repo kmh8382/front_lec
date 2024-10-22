@@ -51,7 +51,6 @@
 </script>
 <hr>
 
-
 <script>
   // 문제2. nDay 일 후 요일 구하기
   let day = 1;
@@ -75,7 +74,7 @@
         본문
       }
 -->
-<h4>for in 문</h4>
+<h4>for in 문</h4>  <!-- **기본 for 문에서 i의 증가와 반복횟수를 설정할 필요가 없음** -->
 <script>
   let cities = ['seoul', 'roma', 'newyork', 'sidney', 'tokyo'];
   for(let i in cities) {
@@ -93,7 +92,7 @@
       }
 -->
 
-<h4>for of 문</h4>
+<h4>for of 문</h4>  <!-- **기본 for 문에서 i 가 필요없고 입력한 변수에 값이 들어감** -->
 <script>
   // 요소만 추출
   let activities = ['skydiving', 'zipline', 'surfing', 'freediving'];
@@ -114,6 +113,17 @@
     3. 형식
       [ 변수1, 변수2, ... ] = 배열
 -->
+<h4>구조 분해 할당</h4>
+<script>
+  let wepons = ['gun', 'knife','sword', 'bomb'];
+  let [w1, w2, w3, w4] = wepons;
+  // 모두 가능한 형태의 구조 분해 할당
+  // let [w1] = wepons;
+  // let [w1, w2] = wepons;
+  // let [w1, w2, w3] = wepons;
+  document.write(`<div>${w1}, ${w2}, ${w3}, ${w4}</div>`);
+</script>
+<hr>
 
 
 <!-- 문제. 링크 메뉴 만들기 -->
@@ -125,7 +135,19 @@
     <div><a target="_blank" href="https://www.google.com/">구글</a></div>
     <div><a target="_blank" href="https://www.kakao.com/">카카오</a></div>
   */
+  const sites = [
+    '네이버', 'https://www.naver.com/',
+    '구글', 'https://www.google.com/',
+    '카카오', 'https://www.kakao.com/'
+  ];
 
+  // for(let i = 0; i < sites.length; i++) {
+  //   if(i%2 == 0)
+  //     document.write(`<div><a target="_blank" href="${sites[i+1]}">${sites[i]}</a></div>`);
+  // }  
+  for(let i = 0; i < sites.length; i+=2) {
+    document.write(`<div><a target="_blank" href="${sites[i+1]}">${sites[i]}</a></div>`);
+  }  
 </script>
 <hr>
 
