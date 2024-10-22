@@ -88,20 +88,20 @@
 <hr>
 
 <script>
-  // 문제3. nDay 일 후 요일 구하기
+  // 문제2. nDay 일 후 요일 구하기
   let day = 1;
   let weekName = '화';
   let nDay = 30;
   day += nDay;
   let dayNo = day % 7;
   if(dayNo == 0) weekName = '월';
-  else if(dayNo == 0) weekName = '화';
-  else if(dayNo == 0) weekName = '수';
-  else if(dayNo == 0) weekName = '목';
-  else if(dayNo == 0) weekName = '금';
-  else if(dayNo == 0) weekName = '토';
-  else if(dayNo == 0) weekName = '일';
-  document.write(`<div>${day}일 후는 ${weekName}요일입니다.</div>`);
+  else if(dayNo == 1) weekName = '화';
+  else if(dayNo == 2) weekName = '수';
+  else if(dayNo == 3) weekName = '목';
+  else if(dayNo == 4) weekName = '금';
+  else if(dayNo == 5) weekName = '토';
+  else if(dayNo == 6) weekName = '일';
+  document.write(`<div>${nDay}일 후는 ${weekName}요일입니다.</div>`);
 </script>
 
 <!--
