@@ -327,9 +327,9 @@
   for(let dan = 2; dan <= 9; dan++) {
     document.write(`<div>${dan}단</div>`);
     for(let su = 1; su <= 9; su++) {
-      if(su > 5)
-        break;
       document.write(`<div>${dan} * ${su} = ${dan*su}</div>`);
+      if(su === 5)
+        break;
     }
   }
 </script>
