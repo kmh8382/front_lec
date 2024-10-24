@@ -104,17 +104,17 @@
   let months = ['Jen', 'Mar', 'April', 'April', 'June'];
 
   // 1. Array.isArray()
-  document.write(`<div>${Array.isArray(months)}</div>`);
+  document.write(`<div>${Array.isArray(months)}</div><br>`);
 
 
   // 2. Array.prototype.pop() : 마지막 요소 삭제
     // ['Jen', 'Mar', 'April', 'April']
-  document.write(`<div>${months.pop()}</div>`);
+  document.write(`<div>${months.pop()}</div><br>`);
 
 
   // 3. Array.prototype.push() : 마지막 요소로 추가
     // ['Jen', 'Mar', 'April', 'April', 'May']
-  document.write(`<div>${months.push('May')}</div>`);
+  document.write(`<div>${months.push('May')}</div><br>`);
 
 
   // 4. Array.prototype.splice() : 추가/삭제/ 수정 모두 가능한 메소드
@@ -126,13 +126,13 @@
   months.splice(0, 1, 'jan');   // 인덱스 0부터 1개 요소 삭제 후 'Jan' 추가
   for(let i = 0; i < months.length; i++)
     document.write(`<div>${months[i]}</div>`);
-
+document.write(`<br>`);
 
   // 5. Array.prototype.forEach() : 배열 순회
   months.forEach(element => document.write(`<div>${element}</div>`));
     // 인덱스를 사용하는 방법
   months.forEach((element, i) => document.write(`<div>${i+1}${element}</div>`));
-
+document.write(`<br>`);
 
   // 6. Array.prototype.map() : 새로운 배열을 반환
     // ['Jan월', 'Feb월', 'Mar월', 'April월', 'May월']
