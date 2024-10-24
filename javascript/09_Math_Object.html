@@ -47,6 +47,27 @@
       → 암호학적으로 안전한 난수를 제공하지 않으므로 보안과 관련된 용도로 사용 금지(대신 window.crypto.getRandomValues() 메소드 권장)
 -->
 
+<h4>Math 내장 객체</h4>
+<script>
+
+  const vlaue = -12.5678;
+  document.write(`<div>올림 : ${Math.ceil(vlaue)}</div>`);
+  document.write(`<div>내림 : ${Math.floor(vlaue)}</div>`);
+  document.write(`<div>반올림 : ${Math.round(vlaue)}</div>`);
+  document.write(`<div>절사 : ${Math.trunc(vlaue)}</div>`);
+
+
+  /*
+    0.0 <= Math.random() < 1.0
+    0.0 <= Math.random() * 10 < 10.0
+      0 <= Math.floor(Math.random() * 10) < 10
+      1 <= Math.floor(Math.random() * 10 +1) < 11
+  */
+  let lotto = Math.floor(Math.random() *45 +1);   // 1부터 45개의 난수
+  document.write(`<div>${lotto}</div>`);
+
+</script>
+<hr>
 
 
 <!-- 문제1. getRandomDouble() 함수 구현하기 -->
@@ -62,6 +83,17 @@
     3. 반환
       최솟값과 최댓값 사이의 임의의 실수 난수
   */
+  /*
+    0.0 <= Math.random() < 1.0
+    0.0 <= Math.random() *2 < 2.0
+    3.0 <= Math.random() *2 +3 < 5.0
+    min <= Math.random() *(max-min) < max
+  */
+//  const getRandomDouble = (min, max) => {
+//    return Math.random() * (max - min) + min;
+//  }
+  const getRandomDouble = (min, max) => Math.random() * (max - min) + min;
+  document.write(`<div>${getRandomDouble(3, 5)}</div>`);
 
 </script>
 <hr>
@@ -82,6 +114,9 @@
       최솟값과 최댓값 사이의 임의의 정수 난수
   */
   
+  const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min) + min);
+  document.write(`<div>${getRandomInt(3, 5)}</div>`);
+
 </script>
 <hr>
 
@@ -101,6 +136,9 @@
       최솟값과 최댓값 사이의 임의의 정수 난수
   */
   
+  const getRandomIntInclude = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+  document.write(`<div>${getRandomIntInclude(3, 5)}</div>`);
+
 </script>
 <hr>
 
@@ -127,7 +165,29 @@
       getCeil(12345.12345, -2) ===  12400
       getCeil(12345.12345, -3) ===  13000
   */
+  /*
+    1) 12345.12345 * 100 === 1234512.345
+    2) Math.ceil(1234512.345) === 1234513
+    3) 1234513 / 100 === 12345.13
+  */
+  const getCeil = (num, cnt = 0) => {
+//    num *= Math.pow(10, cnt);
+//    num = Math.ceil(num);
+//    num /= Math.pow(10, cnt);;
+//    return num
+
+//    const power = Math.pow(10, cnt);
+//    return Math.ceil(num * power) / power;
+
+    return Math.ceil(num * Math.pow(10, cnt)) / Math.pow(10, cnt);
+  }
   
+  document.write(`<div>소수 2자리 올림 ${getCeil(12345.12345, 2)}</div>`);  
+  document.write(`<div>소수 1자리 올림 ${getCeil(12345.12345, 2)}</div>`);  
+  document.write(`<div>정수 올림 ${getCeil(12345.12345, 2)}</div>`);  
+  document.write(`<div일의 자리1 올림 ${getCeil(12345.12345, 2)}</div>`);  
+  document.write(`<div>십의 자리 올림 ${getCeil(12345.12345, 2)}</div>`);  
+
 </script>
 <hr>
 
