@@ -114,15 +114,15 @@
   }
  
   const regUpprt = /[A-Z]/g;                              // 대문자 정규식
-  document.write(`<div>${str.match(regUpprt)}</div>`);    // 대문자를 모두 찾아서 벼열로 반환
+  document.write(`<div>${str.match(regUpprt)}</div>`);    // 대문자를 모두 찾아서 배열로 반환
   document.write(`<div>${str.search(regUpprt)}</div>`);   // 첫 번째 대문자의 인덱스를 반환
  
   document.write(`<div>${str.padStart(15, '*')}</div>`);  // str 의 길이가 15가 되도록 * 를 왼쪽에 채우시오.
   document.write(`<div>${str.padEnd(15, '*')}</div>`);    // str 의 길이가 15가 되도록 * 를 오른쪽에 채우시오.
 
   document.write(`<div>${str.replace('Java', 'ECMA')}</div>`);
-  document.write(`<div>${str.replace('a', 'A')}</div>`);          // 문자열 'a'는 첳 번째 항목만 'A'로 바뀜
-  document.write(`<div>${str.replaceAll('a', 'A')}</div>`);       // 모든 'a'rk 'A'로 바뀜
+  document.write(`<div>${str.replace('a', 'A')}</div>`);          // 문자열 'a'는 첫 번째 항목만 'A'로 바뀜
+  document.write(`<div>${str.replaceAll('a', 'A')}</div>`);       // 모든 'a'가 'A'로 바뀜
 
   document.write(`<div>${str.replace(regUpprt, 'A')}</div>`);     // 모든 대문자가 'A'로 바뀜 (정규식 사용)
   document.write(`<div>${str.replaceAll(/[A-Z]/g, 'A')}</div>`);  // 모든 대문자가 'A'로 바뀜
@@ -140,7 +140,7 @@
   var ary = str.split(',');
 // ary.forEach((elemet, i) => {
 //   document.write(`<div>인덱스${i} : ${elemet}</div>`);
-// });s
+// });
   ary.forEach((elemet, i) => document.write(`<div>인덱스${i} : ${elemet}</div>`));
 
   document.write(`<div>${str.toLowerCase()}</div>`);
@@ -258,6 +258,16 @@
 
   addCarMaker(cars);
 
+
+
+
+const a = [1,2,3,4,5];
+ 
+const b = a.filter(function(s) {
+    return s * s;
+})
+ 
+console.log(b);
 </script>
 <hr>
 
