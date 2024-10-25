@@ -70,7 +70,23 @@
       1) JSON 문자열의 구문을 분석하고 그 결과에서 JavaScript 값이나 객체를 생성한다.
       2) 서버로부터 받은 JSON 문자열 데이터를 JavaScript 데이터로 바꿀 때 주로 활용한다.
 -->
+<h4>JSON 내장 객체</h4>
+<script>
 
+  const pad = {
+    model: 'ipad',
+    price: 150,
+  }
+
+  // JSON 문자열
+  const strJson = JSON.stringify(pad);
+  document.write(`<div>${strJson}</div>`);
+
+  // JSON 객체
+  const objJson = JSON.parse(strJson);
+  document.write(`<div>${objJson.model} ${objJson.price}</div>`);
+</script>
+<hr>
 
 
 <!-- 문제. printObject() 함수 구현하기 -->
@@ -86,6 +102,13 @@
       없음
   */
 
+  const printObject = (strJson) => {
+    const objJson = JSON.parse(strJson);
+    for(const prop in objJson)
+      document.write(`<div>${prop}: ${objJson[prop]}</div>`);
+  }
+
+  printObject('{"name": "jessica", "age": 20, "isMarried": false}');
 </script>
 <hr>
 
