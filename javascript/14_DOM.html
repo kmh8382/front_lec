@@ -484,7 +484,7 @@
 </style>
 <script>
   /*
-    displayDday() 함수
+    changeImage() 함수
     1. 기능
       1) 5초마다 screen-saver 의 배경 이미지를 변경하는 함수
       2) 배경 이미지는 animal1.jpg ~ animal10.jpg 중 하나를 사용함
@@ -495,7 +495,21 @@
     4. Hint
       1 ~ 10 사이의 정수 난수를 구하는 getRandomIntInclusive() 함수를 함께 사용
   */
+const getRandomIntInclusive = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
 
+const changeImage = () => {
+  const screeSaver = document.getElementById('screen-saver');
+
+  // 5초미다 이니까 인터벌함수 사용
+  setInterval(() => {
+    // css 수정이기에 .style를 사용
+    screeSaver.style.backgroundImage = `url(../assets/images/animal${getRandomIntInclusive(1, 10)}.jpg)`;
+  }, 1000);
+}
+
+changeImage();
 </script>
 <hr>
 
@@ -552,6 +566,25 @@
       2) 임의의 rgba(red, green, blue, opacity) 색상 함수를 만들어 반환하는 getRandomRgba() 함수를 만들어서 사용
   */
 
+  // min <= random < max
+  const getRandomRgba = (min, max) => {
+    return Math.floor(Math.random() * (max - min) + min);
+  }
+
+  const imageCover = () => {
+    const cover = document.getElementById('cover');
+
+    setInterval(() => {
+      // cover.style.backgroundColor = 'rgba(' + 
+      //                                 getRandomRgba(0,256) + ',' +
+      //                                 getRandomRgba(0,256) + ',' +
+      //                                 getRandomRgba(0,256) + ',' +
+      //                                 Math.random() + ')';
+      cover.style.backgroundColor = `rgba(${getRandomRgba(0,256)}, ${getRandomRgba(0,256)}, ${getRandomRgba(0,256)}, ${Math.random()})`;
+    }, 1000);
+  }
+
+  imageCover();
 </script>
 <hr>
 
@@ -576,11 +609,11 @@
       없음
   */
   const getMovies = () => {
-    const movies = {
+    const movies = {          // 객체   ex) movies.year
       year: 2023,
       genre: 'action',
-      items: [
-        {
+      items: [                // 배열   ex) movies.items[0]
+        {                     // 객체   ex) movies.items[0].no
           no: '20235034',
           thumbnail: 'https://www.kobis.or.kr/common/mast/movie/2023/11/thumb_x192/thn_65a860f7dfb04c449f4a0f0d3207edee.jpg',
           title: '더 마블스',
@@ -601,8 +634,19 @@
       ]
     }
 
+    let str = '';
+    movies.items.forEach((movie) => {
+      str += '<tr>';
+      str += '<td>' + movie.no + '</td>';
+      str += '<td><img src="' + movie.thumbnail + '" width="100px"></td>';
+      str += '<td>' + movie.title + '</td>';
+      str += '<td>' + movie.director + '</td>';
+      str += '</tr>';
+    });
+    document.getElementById('movies').innerHTML = str;
   }
   
+  getMovies();
 </script>
 <hr>
 
