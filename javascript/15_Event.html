@@ -497,7 +497,9 @@
 <h4>이미지 슬라이드</h4>
 <div class="image-slide-wrap">
   <div class="image-slide-info">
-    <button type="button" id="prev-btn">이전</button><span id="image-no">1 / 5</span><button type="button" id="next-btn">다음</button>
+    <button type="button" id="prev-btn">이전</button>
+    <span id="image-no">1 / 5</span>
+    <button type="button" id="next-btn">다음</button>
   </div>
   <div id="image-container"></div>
 </div>
@@ -527,6 +529,26 @@
 </style>
 <script>
   // architecture1.jpg ~ architecture5.jpg 를 이용하여 이미지 슬라이드를 만드시오.
+  
+
+
+const imageNo = document.getElementById('image-no');
+const imageContainer = document.getElementById('image-container');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+
+let slideNo = 1;
+const slideImage = function(number) {
+  slideNo += number;
+  if(slideNo > 5) slideNo = 1;
+  if(slideNo < 1) slideNo = 5;
+  imageContainer.style.backgroundImage = `url(../assets/images/architecture${slideNo}.jpg)`;
+  imageNo.textContent = slideNo + ' / 5';
+}
+prevBtn.addEventListener('click', event => slideImage(-1));
+nextBtn.addEventListener('click', event => slideImage(1));
+
+
 
 </script>
 <hr>
@@ -578,6 +600,25 @@
 </style>
 <script>
   // 5개의 각 thumbnail 이미지에 마우스를 가져다대면 해당 이미지를 original-image로 표시하시오.
+
+
+
+const originalImage = document.getElementById('original-image');
+const thumbnailImages = document.querySelectorAll('#thumbnail-images > div');
+
+for(const thumbnailImage of thumbnailImages) {
+  // 마우스가 썸네일 위에 있을 때
+  thumbnailImage.addEventListener('mouseover', function(event) {
+    originalImage.style.backgroundImage = 'url(../assets/images/'+ event.target.dataset.fileName +')';
+    thumbnailImage.style.border = '5px solid orange';
+  })
+  // 마우스가 썸네일 밖으로 나갈 때
+  thumbnailImage.addEventListener('mouseout', function(event) {
+    thumbnailImage.style.border = '5px solid rgba(0, 0, 0, 0.1)';
+  })
+}
+
+
 
 </script>
 <hr>
