@@ -554,9 +554,6 @@
   .thumbnail-wrap div {
     box-sizing: border-box;
   }
-  .thumbnail-wrap div {
-    box-sizing: border-box;
-  }
   #original-image {
     width: 384px;
     height: 256px;
@@ -625,7 +622,35 @@
 </style>
 <script>
   // 전체 선택 체크 상자와 개별 선택 체크 상자가 상호 연동되도록 구현하시오.
+  const chkAll = document.getElementById('chk-all');
+  const chkEach = document.getElementsByClassName('chk-each');
 
+  // 전체 선택
+  chkAll.addEventListener('click', function(event) {
+    // chkEach[0].checked = chkAll.checked
+    // chkEach[1].checked = chkAll.checked
+    // chkEach[2].checked = chkAll.checked
+    for(let i = 0; i < chkEach.length; i++)
+      chkEach[i].checked = chkAll.checked
+  });
+
+  // 개별 선택
+  for(let i = 0; i < chkEach.length; i++) {
+    chkEach[i].addEventListener('click', function(event) {
+      let total = 0;
+      for(let j = 0; j < chkEach.length; j++)
+        total +=chkEach[j].checked;   // true 는 1로 누적되고, false 는 0으로 누적된다.
+
+      // if(total === chkEach.length)
+      //   chkAll.checked = true;
+      // else
+      // chkAll.checked = false;
+
+      // chkAll.checked = total === chkEach.length ? true : false;
+      chkAll.checked = (total === chkEach.length);  // true 또는 false를 chkAll.checked에 넣는다.
+
+    });
+  }
 </script>
 <hr>
 
