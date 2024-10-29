@@ -211,13 +211,146 @@
     4. 최상위 조상에 도달할때까지 이 과정은 계속해서 반복된다.
     5. 이벤트 객체의 stopPropagation() 메소드를 이용해 이벤트 전파를 중지할 수 있다. 다만 특별한 이유가 없다면 중지할 필요가 없다.
 -->
+<h4>이벤트 버블링</h4>
+<style>
+  .bubble {
+    margin: 10px;
+    border: 1px, solid, green;
+  }
+</style>
+<div id="ancestor" class="bubble">
+  조상 div
+  <div id="parent" class="bubble">
+    부모 div
+    <div id="child" class="bubble">
+      자식 div
+    </div>
+  </div>
+</div>
+<script>
+  const ancestor = document.getElementById('ancestor');
+  const parent = document.getElementById('parent');
+  const child = document.getElementById('child');
+
+  // 화살표 함수로는 this를 사용못함
+  ancestor.addEventListener('click', (event) => {
+    alert(`최초 이벤트 발생 : ${event.target.id}, 현재 이벤트 발생 : ${event.currentTarget.id}, this : ${this.id}`);
+  });
+  parent.addEventListener('click', (event) => {
+    alert(`최초 이벤트 발생 : ${event.target.id}, 현재 이벤트 발생 : ${event.currentTarget.id}, this : ${this.id}`);
+    // event.stopPropagation();     // ancestor로 이벤트가 전파되는 것을 막는 코드
+  });
+  child.addEventListener('click', (event) => {
+    alert(`최초 이벤트 발생 : ${event.target.id}, 현재 이벤트 발생 : ${event.currentTarget.id}, this : ${this.id}`);
+  });
+</script>
+<hr>
+
+
+
+<!--
+  this
+  1. 어떤 함수를 호출하는 객체를 의미한다.
+  2. 함수 호울 방식에 따라 this 객체가 달라진다.
+    1) 전역함수, 콜백함수, 내부함수 : window 전역 객체
+    2) 객체의 프로터피에 저장된 함수(매소드) : 해당 객체
+  3. JavwScriot 의 함수는 매개변수로 전달되는 인자 이외에 담묵적으로 this 를 전달 받는다.
+  4. 화살표 함수는 this 에 자체 바인딩이 포함되지 않는다.
+  5. 이벤트 핸들러가 화살표 함수인 경우 this 는 사용하지 않는다.
+-->
+<h4>this</h4>
+<script>
+
+  // 전역 함수            ==> this = window
+  function fnGlobal(){
+    console.log(this);
+  }
+  fnGlobal();
+
+  // 콜백 함수            ==> this = window
+  function fnCallback(callback){
+    callback();  
+  }
+  fnCallback(function() {
+    console.log(this);
+  });
+
+  // 객체에 포함된 함수   ==> this = object(car)
+  const car = {
+    model: 'x5',
+    drive: function() {
+      console.log(this);  // this 는 car 객체를 의미한다.
+      // console.log(car.model + ' 타고 드라이브');
+      console.log(this.model + ' 타고 드라이브');
+    },
+    parking: () => {
+      console.log(this);  // 화살표 함수는 this 에 car 객체를 
+      console.log(this.model + ' 주차 중');
+    }
+  }
+  car.drive();
+  car.parking();
+
+</script>
+<hr>
+
+
 
 <!-- 
     이벤트 위임 (Event Delegation)
-    1. 자식에게 할당된 이벤트는 부모에게 전파된다.
+    1. 자식에게 할당된 이벤트는 부모에게 전파된다. (이벤트 버블링)
     2. 자식이 처리해야 할 이벤트를 의도적으로 부모가 처리하게끔 만들 수 있다. 이를 이벤트 위임이라고 한다.
     3. 대표적으로 모든 자식들에게 반복해서 여러 번 할당해야 할 이벤트를 최상위 조상에게 한 번만 할당하는 방식이 있다.
 -->
+<h4>이벤트 위임</h4>
+<style>
+  table {
+    border-collapse: collapse;
+  }
+  table td {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    border: 1px solid green;
+  }
+  .selerde-td {
+    background-color: antiquewhite;
+  }
+</style>
+<table id="table">
+  <tbody>
+<!-- (tr>td*3)*3 소스 생성가능한 약어 사용가능 --> 
+    <tr>
+      <td>Aaa</td>
+      <td>Bbb</td>
+      <td>Ccc</td>
+    </tr>
+    <tr>
+      <td>Ddd</td>
+      <td>Eee</td>
+      <td>Fff</td>
+    </tr>
+    <tr>
+      <td>Ggg</td>
+      <td>Hhh</td>
+      <td>Iii</td>
+    </tr>
+  </tbody>
+</table>
+<script>
+  const table = document.getElementById('table');
+
+  let selectedTd;
+  table.addEventListener('click', function(event) {   // 각 <td>마다 할당해야할 이벤트를 <table>에만 할당하여 이벤트를 위임함
+    // console.log(event.target, event.currentTarget, this);
+    const td = event.target;                        // 클릭한 <td>
+    if(selectedTd !== undefined)  // if(selectedTd) // undefined(false)이 아니다 => true 이다.
+      selectedTd.classList.remove('selerde-td');    // 이전에 선택한 <td>를 해제한다.
+    selectedTd = td;                                // 선택한 <td>
+    selectedTd.classList.add('selerde-td');
+  });
+</script>
+<hr>
 
 <!--
     디폴트 이벤트
@@ -227,12 +360,30 @@
       2) <form> 태그는 submit 하면 action 속성으로 입력 폼 요소의 데이터를 전송하고 입력 폼 요소의 값을 초기화한다.
     3. 이벤트 객체의 preventDefault() 메소드를 호출하면 디폴트 이벤트 동작을 막을 수 있다.
 -->
+<h4>디폴트 이벤트</h4>
+<div>
+  <a href="https://www.naver.com" target="_blank" id="naver-link">일회용 Naver 링크</a>
+</div>
+<script>
+  let visiter = false;
+  const naverLink = document.getElementById('naver-link');
+  naverLink.addEventListener('click', function(event){
+    if(visiter) {      
+      alert('두 번은 못 갑니다.');
+      event.preventDefault();     // <a> 태그 동작 막기
+      return;                     // 이벤트 핸들러 (함수) 실행 종료
+    }
+    visiter = true;
+    
+  });
+</script>
+<hr>
 
 
 
 <!-- 문제1. 로그인 -->
 <h4>로그인</h4>
-<div>
+<div>   <!-- 버튼을 클릭하면 서브밋 이벤트가 발생, 서브밋은 폼태그에서 동작한다. -->
   <form id="login-form" action="/user/login.do" method="post">
     <div><input type="text" id="id" placeholder="Id"></div>
     <div><input type="password" id="password" placeholder="Password"></div>
@@ -241,6 +392,23 @@
 </div>
 <script>
   // 입력된 아이디와 비밀번호가 없으면 로그인을 막는 코드를 작성하시오.
+  const loginForm = document.getElementById('login-form');
+  const id = document.getElementById('id');
+  const password = document.getElementById('password');
+  
+  loginForm.addEventListener('submit', function(event) {
+    if(id.value === '' ) {
+      alert('아이디를 입력하세요.');
+      id.focus();
+      event.preventDefault();   // 서브밋 취소
+      return;                   // 이벤트 핸들러 종료
+    } else if(password.value === '' ) {
+      alert('패스워드를 입력하세요.');
+      password.focus();
+      event.preventDefault();
+      return;
+    }
+  });
 
 </script>
 <hr>
@@ -269,7 +437,25 @@
 </style>
 <script>
   // 버튼을 누를때마다 ON/OFF 버튼 텍스트와 lightOn.png/lightOff.png 이미지를 변환하도록 구현하시오.
+  const switchBtn = document.getElementById('switch-btn');
+  const light = document.getElementById('light');
 
+  switchBtn.addEventListener('click', function(event) {
+    // alert(switchBtn.dataset.power);    
+    // alert(event.target.dataset.power);
+    // alert(event.currentTarget.dataset.power);
+    // alert(this.dataset.power);
+    const btn = event.target;
+    if(btn.textContent === 'ON') {    // if(btn.dataset.power === on)
+      light.className = 'light-off';
+      btn.dataset.power = 'off';
+      btn.textContent = 'OFF'
+    } else {
+      light.className = 'light-on';
+      btn.dataset.power = 'on';
+      btn.textContent = 'ON'
+    }
+  });
 </script>
 <hr>
 
@@ -283,11 +469,25 @@
   }
 </style>
 <div>
-  <input type="password" id="pw"><span id="eye" class="eye"><i class="fa-regular fa-eye-slash"></i></span>
+  <input type="password" id="pw">
+  <span id="eye" class="eye">
+    <i class="fa-regular fa-eye-slash"></i>
+  </span>
 </div>
 <script>
   // 아이콘을 클릭할때마다 입력한 비밀번호를 보여주거나 숨기도록 구현하시오.
+  const pw = document.getElementById('pw');
+  const icon = document.querySelector('#eye > i');
 
+  icon.addEventListener('click', function(event) {    
+    if(icon.className.indexOf('fa-eye-slash') !== -1) {    // if(pw.type === 'password')
+      pw.type = 'text';
+      icon.className = 'fa-regular fa-eye';
+    } else {
+      pw.type = 'password';
+      icon.className = 'fa-regular fa-eye-slash';
+    }
+  });
 </script>
 <hr>
 

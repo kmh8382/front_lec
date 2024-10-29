@@ -141,7 +141,7 @@
   console.log(boxes);
 
   /* HTMLCollection 객체 반환 */
-  const dives = document.getElementsByTagName('div');
+  const dives = document.getElementsByTagName('div');     // 유사배열 형태 dives[0] 같은 방식으로 사용가능
   console.log(dives);
   const primaryBox = document.getElementsByClassName('primary-box');
   console.log(primaryBox);
@@ -285,6 +285,20 @@
     class 속성   |  class="blind"     |  className: "blind"
     checked 속성 |  checked="checked" |  checked: true
 -->
+<div>
+  <input type="radio" name="gender" id="man" value="man" checked>
+  <label for="man">남자</label>
+  <input type="radio" name="gender" id="woman" value="woman">
+  <label for="woman">여자</label>
+</div>
+<script>
+  const man = document.getElementById('man');
+  man.removeAttribute('checked');
+  const woman = document.getElementById('woman');
+  //woman.setAttribute('checked', 'checked');
+  woman.checked = true;
+</script>
+<hr>
 
 
 
