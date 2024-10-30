@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <script src="../assets/lib/jquery-3.7.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.5/js.cookie.min.js" integrity="sha512-nlp9/l96/EpjYBx7EP7pGASVXNe80hGhYAUrjeXnu/fyF5Py0/RXav4BBNs7n5Hx1WFhOEOWSAVjGeC3oKxDVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
@@ -19,6 +18,43 @@
       3) location : 경로(URL)를 관리하는 객체이다.
       4) screen   : 브라우저 화면 정보를 관리하는 객체이다.
 -->
+<h4>history 객체</h4>
+<div>
+  <button type="button" id="back-btn" onclick="history.back()">뒤로</button>
+  <button type="button" id="forward-btn" onclick="history.forward()">앞으로</button>
+  <button type="button" id="forward-btn" onclick="history.go(-2)">뒤로뒤로</button>
+</div>
+<hr>
+
+
+
+<h4>location 객체</h4>
+<div>
+  <button type="button" onclick="letGo()">Let's Go</button>
+  <button type="button" onclick="location.reload()">새로고침(캐시사용)</button>   <!-- 로컬pc의 캐시를 사용한 새로고침 -->
+  <button type="button" onclick="location.reload(true)">항상새로고침</button>     <!-- 서버에서 새로 받아오는 새로고침 -->
+</div>
+<script>
+  const letGo = () => {
+    // 이동 (일반적인 이동)
+    // location.href = 'https://www.naver.com/';  // location = 'https://www.naver.com/';
+
+    // 이동 (히스토리를 암기지 않는 방식)
+    location.replace('https://www.naver.com/');
+  }
+</script>
+<hr>
+
+
+
+<h4>screen 객체</h4>
+<script>
+  document.write(`<div>화면 높이 : ${screen.height}</div>`)
+  document.write(`<div>화면 너비 : ${screen.width}</div>`)
+  document.write(`<div>화면 가용 높이 : ${screen.availHeight}</div>`)
+  document.write(`<div>화면 가용 너비 : ${screen.availWidth}</div>`)
+</script>
+<hr>
 
 
 
@@ -34,6 +70,78 @@
     url: 'https://www.naver.com',
   }
   
+  const goBtn = document.getElementById('go-btn');
+  goBtn.textContent = site.name;
+  goBtn.addEventListener('click', function(event) {
+    location.href = site.url;
+  });
+
+</script>
+<hr>
+
+
+<h4>window 객체</h4>
+<div>
+  <button type="button" id="open-btn">팝업열기</button>
+  <button type="button" id="close-btn">팝업닫기</button>
+</div>
+<div>
+  <input type="text" id="parent" placeholder="팝업창으로 전송할 메시지">
+  <button type="button" id="send-btn">전송</button>
+</div>
+<div id="child-msg"></div>
+
+<script>
+  //전역 변수
+  var popup = null;     // 팝업 창을 저장할 변수
+  var opened = false;   // 팝업 창 오픈 여부를 저장할 변수
+
+  const openPopup = () => {
+    //팜업 창 화면 중앙에 띄우기
+    const width = 320;
+    const height = 480;
+    const top = (screen.height - height) / 2;
+    const left = (screen.width - width) / 2;
+
+    if(opened) {
+      alert('팝업창은 이미 열려 있습니다.');
+      return;
+    }
+
+    //popup = open('popup.html', '', 'width=320,height=480,top=100,left=100');
+    popup = open('popup.html', '', `width=${width},height=${height},top=${top},left=${left}`);
+    opened = true;
+
+    if(!popup) {    // if(popup === null)
+      alert('팝업차단을 해제해 주세요.');
+    }
+  }
+
+  const closePopup = () => {
+    if(opened) {
+      popup.close();    // 팜업 창 닫기
+      opened = false;
+    }      
+  }
+
+  const sendPopup = () => {
+    /* 
+      popup.document.getElementById('parent-msg') 인식을 위해서
+      popup 창의 본문의 모든 코드를 읽은 뒤 처리하는 이벤트
+    */
+    popup.onload = function(event) {
+      popup.document.getElementById('parent-msg').textContent = window.document.getElementById('parent').value;
+    }
+  }
+
+  const openBtn = document.getElementById('open-btn');
+  const closeBtn = document.getElementById('close-btn');
+  const sendBtn = document.getElementById('send-btn');
+
+  openBtn.addEventListener('click', openPopup);
+  closeBtn.addEventListener('click', closePopup);
+  sendBtn.addEventListener('click', openPopup);
+  sendBtn.addEventListener('click', sendPopup);
 </script>
 
 </body>
