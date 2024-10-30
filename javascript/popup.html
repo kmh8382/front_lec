@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>popup</title>
+  <!-- Cookies.set()을 위한 스크립트 -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.5/js.cookie.min.js" integrity="sha512-nlp9/l96/EpjYBx7EP7pGASVXNe80hGhYAUrjeXnu/fyF5Py0/RXav4BBNs7n5Hx1WFhOEOWSAVjGeC3oKxDVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <style>
@@ -38,6 +39,22 @@
   </div>
   <script>
 
+    /*
+      "오늘 더 이상 열지 않기" 체크상자를 체크하면,
+      "chk-dont-open" 라는 이름의 쿠키에 true 값을 저장한다.
+      해당 쿠키는 1일 동안 모든 경로("/")에서 확이날 수 있다.
+    */
+
+    const popupClose = (event) => {
+      const chkDontOpen = document.getElementById("chk-dont-open");
+      if(chkDontOpen.checked) {
+        Cookies.set('dont_open_today', true, {
+          expires: 1,   // 유효기간 0 으로 설정 시 쿠키삭제됨
+          path: '/',
+        });        
+      }
+      window.close();
+    }
   </script>
 
 

@@ -97,6 +97,9 @@
   var opened = false;   // 팝업 창 오픈 여부를 저장할 변수
 
   const openPopup = () => {
+    // dont_open_today 쿠키 값 가져오기 (쿠키가 없으면 undefined)
+    const dontOpenToday = Cookies.get('dont_open_today');
+
     //팜업 창 화면 중앙에 띄우기
     const width = 320;
     const height = 480;
@@ -104,7 +107,12 @@
     const left = (screen.width - width) / 2;
 
     if(opened) {
-      alert('팝업창은 이미 열려 있습니다.');
+      alert('팝업 창은 이미 열려 있습니다.');
+      return;
+    }
+
+    if(dontOpenToday) {
+      alert('오늘은 팝업 창을 열 수 없습니다.');
       return;
     }
 
