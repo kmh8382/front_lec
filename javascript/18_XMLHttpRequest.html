@@ -332,7 +332,12 @@
 </div>
 <table border="1">
   <thead>
-    <tr><td>앨범아이디</td><td>포토썸네일</td><td>포토아이디</td><td>포토제목(클릭하면 포토이미지 오픈)</td></tr>
+    <tr>
+      <td>앨범아이디</td>
+      <td>포토썸네일</td>
+      <td>포토아이디</td>
+      <td>포토제목(클릭하면 포토이미지 오픈)</td>
+    </tr>
   </thead>
   <tbody id="photos"></tbody>
 </table>
@@ -344,8 +349,57 @@
     albumId 는 1 ~ 100 값을 가지고 있고, id 는 1 ~ 5000 값을 가지고 있다.
   */
 
+  document.getElementById('get-photo-btn').addEventListener('click', function(event) {
+
+    const xhr = new XMLHttpRequest();
+
+    const method = 'GET';
+    const url = 'https://jsonplaceholder.typicode.com/photos/';
+    xhr.open(method, url) ;
+
+    xhr.addEventListener('load', function(event) {
+
+      const responseData = JSON.parse(xhr.responseText);
+      let str = '';
+      // const albumId = Number(document.getElementById('album-id').value) || 1;
+      const albumId = document.getElementById('album-id');
+
+// console.log(responseData);
+      responseData.forEach(photo => {
+// console.log('input', albumId.value);
+// console.log('json', photo.albumId);
+        if((albumId.value || 1) == photo.albumId) {
+          // str += '<tr><td>' + photo.albumId + '</td>';
+          // str += '  <td><img src="' + photo.thumbnailUrl + '" width="50px"></td>';
+          // str += '  <td>' + photo.id + '</td>';
+          // str += '  <td><a href="' + photo.url + '" target="_blank">' + photo.title + '</a></td>';
+          // str += '</tr>';
+          str += `<tr>`;
+          str += `<td>${photo.albumId}</td>`;
+          str += `<td><img src="${photo.thumbnailUrl}" width="50px"></td>`;
+          str += `<td>${photo.id}</td>`;
+          str += `<td><a href="${photo.url}" target="_blank">${photo.title}</a></td>`;
+          str += `</tr>`;
+        }
+
+      });
+      document.getElementById('photos').innerHTML = str;
+
+    });
+
+    xhr.addEventListener('error', function(event) {
+
+      console.log(xhr.status);
+
+    });
+
+    xhr.send();
+  });
+
 </script>
 <hr>
 
 </body>
 </html>
+
+
