@@ -146,6 +146,107 @@
     3. 아직 BackEnd Server 가 없기 때문에 FrontEnd 수업에서 잠시만 사용한다.
 -->
 
+<h4>비동기 요청과 JSON 응답</h4>
+<div>
+  <button type="button" id="json-btn">json응답</button>
+  <div id="authors"></div>
+</div>
+<script>
+
+  document.getElementById('json-btn').addEventListener('click', function(event) {
+
+    // 1. MLHttpRequest 객체 생성
+    const xhr = new XMLHttpRequest();
+
+    // 2. 초기화
+    const method = 'get';
+    const url = 'https://thetestrequest.com/authors/';
+    xhr.open(method, url) ;
+
+    // 3. 요청상태(readyState) 변화 감지 이벤트
+    xhr.addEventListener('readystatechange', function(event) {
+
+      // 요청 상태 확인
+      if(xhr.readyState === XMLHttpRequest.DONE) {    // if(xhr.readyState === 4)
+
+        // 응답 상태 확인
+        if(xhr.status === 200) {
+
+          // 응답 데이터가 json 인 경우 응답 속성으로 responseText 을 사용한다.
+          const responseData = JSON.parse(xhr.responseText);
+          
+          // 응답 데이터 태그로 만들어 화면에 출력한다.
+          let str = '';
+          responseData.forEach(author => {
+            str += '<div class="author">';
+            str += '  <div>ID : ' + author.id + '</div>';
+            str += '  <div>NAME : ' + author.name + '</div>';
+            str += '  <div>EMAIL : ' + author.email + '</div>';
+            str += '  <div><a href="' + author.avatar + '" target="_blank">AVATAR</a></div>';
+            str += '  <div>CREATED_AT : ' + author.created_at + '</div>';
+            str += '  <div>UPDATED_AT : ' + author.updated_at + '</div>';
+            str += '</div>';
+          }); 
+          document.getElementById('authors').innerHTML = str;
+
+        }
+
+      }
+
+    });
+
+    // 4. 요청 전송
+    xhr.send();
+  });
+  
+</script>
+<hr>
+
+
+
+<h4>비동기 요청과 XML 응답</h4>
+<div>
+  <button type="button" id="xml-btn">xml응답</button>
+  <div id="authors-list"></div>
+</div>
+<script>
+
+  document.getElementById('xml-btn').addEventListener('click', function(event) {
+    const xhr = new XMLHttpRequest();
+    const method = 'GET';
+    const url = 'https://thetestrequest.com/authors.xml/';
+    xhr.open(method, url) ;
+    xhr.addEventListener('readystatechange', function(event) {
+      if(xhr.readyState === 4) {
+        if(xhr.status === 200) {
+          // 응답 데이터가 XML 인 경우 responseXML 속성을 사용한다.
+          const responseData = xhr.responseXML;
+          const authors = responseData.getElementsByTagName('object');
+          let str = '';
+          for(const author of authors) {
+            str += '<div class="author">';
+            // 태그 이름으로는 하나만 가져올수 없다. (getElement's'ByTagName)
+            // 배열로 취급하여 가져온다.
+            str += '  <div><img src="' + author.getElementsByTagName('avatar')[0].textContent + '" width="100px"></div>';
+            str += '  <div><b>ID : </b>' + author.getElementsByTagName('id')[0].textContent + '</div>';
+            str += '  <div><b>NAME : </b>' + author.getElementsByTagName('name')[0].textContent + '</div>';
+            str += '  <div><b>EMAIL : </b>' + author.getElementsByTagName('email')[0].textContent + '</div>';
+            str += '  <div><b>CREATED_AT : </b>' + author.getElementsByTagName('created-at')[0].textContent + '</div>';
+            str += '  <div><b>UPDATED_AT : </b>' + author.getElementsByTagName('updated-at')[0].textContent + '</div>';
+            str += '</div>';
+          }
+          document.getElementById('authors-list').innerHTML = str;
+        }
+      }
+    });
+    xhr.send();
+  });
+
+</script>
+<hr>
+
+
+
 <!--
     공공데이터 포털 서비스 활용하기(data.go.kr)
 
@@ -158,7 +259,7 @@
     3. 요청변수(Request Parameter)
         구분 | 항목명     | 항목설명                       | 샘플데이터
         -----|------------|--------------------------------|--------------------
-        필수 | ServiceKey | 공공데이터포털에서 받은 인증키 | bEL0T8usfsZ1%2B...
+        필수 | serviceKey | 공공데이터포털에서 받은 인증키 | bEL0T8usfsZ1%2B...
         필수 | pageNo     | 페이지번호                     | 1
         필수 | numOfRows  | 한 페이지 결과 수              | 1000
         필수 | base_date  | 발표일자                       | 20210628
@@ -191,6 +292,32 @@
   <div id="contents"></div>
 </div>
 <script>
+  document.getElementById('public-data-btn').addEventListener('click', function(event) {
+    const xhr = new XMLHttpRequest();
+    const method = 'GET';
+    let url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst';
+        url += '?serviceKey=FzHBdrlE576Tu8T7P111HAACaxaJL4BzCfbnTaZ6SaXYmeWxFjJfrpzyjqZ2BdsbS1QVz5ey9TQDW0DWrFBzyA%3D%3D';
+        url += '&pageNo=1';
+        url += '&numOfRows=1000';
+        // url += '&base_date=20210628';
+        url += '&base_date=20241031';
+        url += '&base_time=0500';
+        url += '&nx=61';
+        url += '&ny=125';
+        url += '&dataType=JSON';
+    xhr.open(method, url);
+
+    xhr.addEventListener('load', function(event) {
+      const responsData = JSON.parse(xhr.responseText);
+      console.log(responsData);
+    });
+
+    xhr.addEventListener('error', function(event) {
+      console.log(xhr.status);
+    });
+
+    xhr.send();
+  });
 
 </script>
 <hr>

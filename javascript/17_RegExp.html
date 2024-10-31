@@ -205,6 +205,24 @@
 </div>
 <script>
 
+
+
+
+  const verifyIp = () => {
+    const regIp = /^((([0-9])|([1-9][0-9])|(1[0-9]{2})|(2[0-4][0-9])|(25[0-5]))\.){3}(([0-9])|([1-9][0-9])|(1[0-9]{2})|(2[0-4][0-9])|(25[0-5]))$/;
+    const ip = document.getElementById('ip');
+    if(regIp.test(ip.value)){
+      alert('아이피 맞다.');
+    } else {
+      alert('아이피 아니다.');
+    }
+  }
+
+  document.getElementById('ip-btn').onclick = verifyIp;
+
+
+
+
 </script>
 <hr>
 
@@ -294,24 +312,44 @@
 
 
 
-<h4>추가 문제</h4>
-<div>
-  <form method="post">
-    <table>
-      <tbody>
-        <tr>
-          <td><input type="text" placeholder="아이디" name="id"></td>
-          <td rowspan="2"><button type="submit">로그인</button></td>
-        </tr>
-        <tr>
-          <td><input type="password" placeholder="비밀번호" name="pwd"></td>
-        </tr>
-      </tbody>
-    </table>
-  </form>
-</div>
+<!-- 2. 회원 가입 -->
+<h4>회원 가입 화면</h4>
+<form id="singup-form" method="post" action="/user/signup.do">
+  <div>
+    <input type="text" placeholder="example@naver.com" id="user-email">
+  </div>
+  <div>
+    <input type="password" placeholder="비밀번호" id="user-pwd">
+  </div>
+  <div>
+    <button type="submit">Sign Up</button>
+  </div>
+</form>
 <script>
-  // 정규식을 이용한 submin 제한 기능 구현하시오.
+
+  // 아래 정규식을 통과하지 못하면 회원 가입을 못하도록 submit 을 방지하시오.
+  // 아이디   : 이메일을 아이디로 활용
+  // 비밀번호 : 4자 이상, 영문/숫자/특수문자 사용 가능
+
+  const singupForm = document.getElementById('singup-form');
+  const userEmail = document.getElementById('user-email');
+  const userPwd = document.getElementById('user-pwd');
+
+  singupForm.addEventListener('submit', function(event) {
+    const regEmail = /^[A-Za-z0-9-_]+@[A-Za-z0-9]+([.][A-Za-z]{2,6}){1,2}$/;
+    const regPwd = /^[A-Za-z0-9!@#$%^&*()]{4,}$/;
+
+    if(regEmail.test(userEmail.value) === false) {
+      alert('입력된 이메일을 확인하세요.');
+      event.preventDefault();   // 서브밋을 막는 가능
+      return;                   // 이벤트 핸들러 중지
+    } else if(regPwd.test(userPwd.value) === false) {
+      alert('입력된 비밀번호를 확인하세요.');
+      event.preventDefault();   // 서브밋을 막는 가능
+      return;                   // 이벤트 핸들러 중지
+    }
+    
+  });
 </script>
 <hr>
 
